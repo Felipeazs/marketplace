@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
+import PrivateRoute from './components/PrivateRoute';
 
 //layout
 import Navbar from './components/Navbar';
@@ -28,8 +29,13 @@ function App() {
 					/>
 					<Route
 						path='/profile'
-						element={<Profile />}
-					/>
+						element={<PrivateRoute />}
+					>
+						<Route
+							path='/profile'
+							element={<Profile />}
+						/>
+					</Route>
 					<Route
 						path='/sign-in'
 						element={<SignIn />}
