@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //firebase
-import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 import Spinner from '../components/Spinner';

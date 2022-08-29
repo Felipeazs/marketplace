@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 //styles
 import 'react-toastify/dist/ReactToastify.css';
+import arrowRight from '../assets/svg/keyboardArrowRightIcon.svg';
+import homeIcon from '../assets/svg/homeIcon.svg';
 
 //firebase
 import { getAuth, updateProfile } from 'firebase/auth';
@@ -93,6 +96,20 @@ const Profile = () => {
 						/>
 					</form>
 				</div>
+				<Link
+					to='/create-listing'
+					className='createListing'
+				>
+					<img
+						src={homeIcon}
+						alt='home'
+					/>
+					<p>Sell or rent your home</p>
+					<img
+						src={arrowRight}
+						alt='arrow'
+					/>
+				</Link>
 			</main>
 		</div>
 	);

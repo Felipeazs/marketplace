@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -10,11 +10,15 @@ import { db } from '../firebase.config';
 //icons
 import googleIcon from '../assets/svg/googleIcon.svg';
 
+import Spinner from './Spinner';
+
 const OAuth = () => {
+	const [loading, setLoading] = useState(false);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 
 	const onGoogleHandler = async () => {
+		setLoading(true);
 		try {
 			const auth = getAuth();
 			const provider = new GoogleAuthProvider();
@@ -34,11 +38,18 @@ const OAuth = () => {
 				});
 			}
 
+			setLoading(false);
+
 			navigate('/');
 		} catch (error) {
+			setLoading(false);
 			toast.error('Could not authorize with google');
 		}
 	};
+
+	if (loading) {
+		return <Spinner />;
+	}
 
 	return (
 		<div className='socialLogin'>

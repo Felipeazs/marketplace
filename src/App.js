@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
 import PrivateRoute from './components/PrivateRoute';
 import Category from './pages/Category';
+import CreateListing from './pages/CreateListing';
 
 //layout
 import Navbar from './components/Navbar';
@@ -31,6 +32,10 @@ function App() {
 					<Route
 						path='/category/:categoryName'
 						element={<Category />}
+					/>
+					<Route
+						path='/create-listing'
+						element={<CreateListing />}
 					/>
 					<Route
 						path='/profile'
