@@ -1,7 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import rentCategoryImage from '../assets/jpg/rentCategoryImage.jpg';
+import sellCategoryImage from '../assets/jpg/sellCategoryImage.jpg';
 
 const Explore = () => {
-	return <h1>Explore</h1>;
+	return (
+		<div className='explore'>
+			<header>
+				<p className='pageHeader'>Explorer</p>
+			</header>
+
+			<main>
+				<p className='exploreCategoryHeading'>Categories</p>
+				<div className='exploreCategories'>
+					<Link to='/category/rent'>
+						<img
+							src={rentCategoryImage}
+							alt='rentImg'
+							className='exploreCategoryImg'
+						/>
+						<p className='exploreCategoryName'>Places for rent</p>
+					</Link>
+					<Link to='/category/sell'>
+						<img
+							src={sellCategoryImage}
+							alt='sellImg'
+							className='exploreCategoryImg'
+						/>
+						<p className='exploreCategoryName'>Places for sale</p>
+					</Link>
+				</div>
+			</main>
+		</div>
+	);
 };
 
 export default Explore;

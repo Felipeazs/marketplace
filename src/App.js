@@ -10,6 +10,7 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
 import PrivateRoute from './components/PrivateRoute';
+import Category from './pages/Category';
 
 //layout
 import Navbar from './components/Navbar';
@@ -26,6 +27,10 @@ function App() {
 					<Route
 						path='/offers'
 						element={<Offers />}
+					/>
+					<Route
+						path='/category/:categoryName'
+						element={<Category />}
 					/>
 					<Route
 						path='/profile'
