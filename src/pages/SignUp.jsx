@@ -1,6 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+//firebase
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase.config';
+
 //icons
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
@@ -18,6 +23,30 @@ const SignUp = () => {
 		}));
 	};
 
+	const submitHandler = async (event) => {
+		event.preventDefault();
+
+		try {
+			const auth = getAuth();
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			const user = userCredential.user;
+
+			updateProfile(auth.currentUser, {
+				displayName: name,
+			});
+
+			const formDataCopy = { ...formData }; // copy of the state
+			delete formDataCopy.password; // remove from the object
+			formDataCopy.timestamp = serverTimestamp(); // adding timestamp
+
+			await setDoc(doc(db, 'users', user.uid), formDataCopy); // saving to database
+
+			navigate('/'); // redirect to home
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Fragment>
 			<div className='pageContainer'>
@@ -26,7 +55,7 @@ const SignUp = () => {
 				</header>
 
 				<main>
-					<form>
+					<form onSubmit={submitHandler}>
 						<input
 							type='text'
 							className='nameInput'
