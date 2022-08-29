@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 //pages
 import Explore from './pages/Explore';
@@ -44,6 +45,7 @@ function App() {
 				</Routes>
 				<Navbar />
 			</Router>
+			<ToastContainer />
 		</Fragment>
 	);
 }
