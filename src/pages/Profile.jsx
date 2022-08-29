@@ -1,11 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
+//styles
+import 'react-toastify/dist/ReactToastify.css';
 
 //firebase
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase.config';
+import { updateDoc, doc } from 'firebase/firestore';
 
 const Profile = () => {
 	const auth = getAuth();
+	const [changeDetails, setChangeDetails] = useState(false);
 	const [formData, setFormData] = useState({
 		name: auth.currentUser.displayName,
 		email: auth.currentUser.email,
@@ -17,6 +24,27 @@ const Profile = () => {
 	const onLogout = () => {
 		auth.signOut();
 		navigate('/');
+	};
+
+	const changeHandler = (event) => {
+		setFormData((prevState) => ({ ...prevState, [event.target.id]: event.target.value }));
+	};
+
+	const onSubmit = async () => {
+		try {
+			if (auth.currentUser.displayName !== name) {
+				//update name
+				await updateProfile(auth.currentUser, {
+					displayName: name,
+				});
+
+				//update firestore
+				const userRef = doc(db, 'users', auth.currentUser.uid);
+				await updateDoc(userRef, { name });
+			}
+		} catch (error) {
+			toast.error('Could not update profile details');
+		}
 	};
 
 	return (
@@ -31,6 +59,41 @@ const Profile = () => {
 					Logout
 				</button>
 			</header>
+
+			<main>
+				<div className='profileDetailsHeader'>
+					<p className='profileDetailsText'>Personal Details</p>
+					<p
+						className='changePersonalDetails'
+						onClick={() => {
+							changeDetails && onSubmit();
+							setChangeDetails((prevState) => !prevState);
+						}}
+					>
+						{changeDetails ? 'done' : 'change'}
+					</p>
+				</div>
+				<div className='profileCard'>
+					<form>
+						<input
+							type='text'
+							id='name'
+							className={!changeDetails ? 'profileName' : 'profileNameActive'}
+							disabled={!changeDetails}
+							value={name}
+							onChange={changeHandler}
+						/>
+						<input
+							type='text'
+							id='email'
+							className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
+							disabled={!changeDetails}
+							value={email}
+							onChange={changeHandler}
+						/>
+					</form>
+				</div>
+			</main>
 		</div>
 	);
 };
