@@ -30,7 +30,7 @@ function App() {
 						element={<Offers />}
 					/>
 					<Route
-						path='/category/:categoryName'
+						path='/category/:categoryName/'
 						element={<Category />}
 					/>
 					<Route

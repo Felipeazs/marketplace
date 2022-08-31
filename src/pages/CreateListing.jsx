@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 //firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 import Spinner from '../components/Spinner';
@@ -106,7 +107,6 @@ const CreateListing = () => {
 		} else {
 			geolocation.lat = latitude;
 			geolocation.lng = longitude;
-			location = address;
 		}
 
 		//Storage images
@@ -153,6 +153,27 @@ const CreateListing = () => {
 				return;
 			},
 		);
+
+		//Saving listing to database
+
+		const formDataCopy = {
+			...formData,
+			imageUrls,
+			geolocation,
+			timestamp: serverTimestamp(),
+		};
+
+		formDataCopy.location = address;
+		delete formDataCopy.images;
+		delete formDataCopy.address;
+		!formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+		const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+
+		setLoading(false);
+		toast.success('Listing saved!');
+
+		navigate(`/category/${formDataCopy.type}/${docRef.id}`);
 
 		setLoading(false);
 	};
