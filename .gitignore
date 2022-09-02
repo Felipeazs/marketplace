@@ -6,6 +6,7 @@
 .pnp.js
 /.vscode
 Notas
+.prettierrc.json
 
 # testing
 /coverage
