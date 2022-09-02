@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
+//additional
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+
 //firestore
 import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
@@ -40,6 +43,8 @@ const Listings = () => {
 
     if (loading) {
         return <Spinner />
+    } else {
+        console.log(listing)
     }
 
     return (
@@ -83,7 +88,20 @@ const Listings = () => {
                     <li>{listing.furnished && 'Furnished'}</li>
                 </ul>
                 <p className="listingLocationTitle">Location</p>
-                {/* MAP */}
+
+                <div className="leafletContainer">
+                    <MapContainer
+                        style={{ height: '100%', width: '100%' }}
+                        center={[listing.geolocation.lat, listing.geolocation.lng]}
+                        zoom={13}
+                        scrollWheelZoom={false}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[listing.geolocation.lat, listing.geolocation.lng]} />
+                    </MapContainer>
+                </div>
 
                 {auth.currentUser?.uid !== listing.userRef && (
                     <Link
