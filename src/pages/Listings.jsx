@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-//additional
+//additional - slider
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 
@@ -17,8 +17,6 @@ import Spinner from '../components/Spinner'
 
 //styles
 import shareIcon from '../assets/svg/shareIcon.svg'
-
-SwiperCore.use(Navigation, Pagination, Scrollbar, A11y)
 
 const Listings = () => {
     const [listing, setListing] = useState(null)
@@ -53,6 +51,8 @@ const Listings = () => {
     return (
         <main>
             <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                scrollbar={{ draggable: true }}
                 slidesPerView={1}
                 pagination={{ clickable: true }}>
                 {listing.imageUrls.map((url, index) => (
