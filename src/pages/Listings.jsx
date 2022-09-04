@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 //additional
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
 //firestore
 import { getDoc, doc } from 'firebase/firestore'
@@ -14,6 +17,8 @@ import Spinner from '../components/Spinner'
 
 //styles
 import shareIcon from '../assets/svg/shareIcon.svg'
+
+SwiperCore.use(Navigation, Pagination, Scrollbar, A11y)
 
 const Listings = () => {
     const [listing, setListing] = useState(null)
@@ -43,13 +48,24 @@ const Listings = () => {
 
     if (loading) {
         return <Spinner />
-    } else {
-        console.log(listing)
     }
 
     return (
         <main>
-            {/* SLIDER */}
+            <Swiper
+                slidesPerView={1}
+                pagination={{ clickable: true }}>
+                {listing.imageUrls.map((url, index) => (
+                    <SwiperSlide key={index}>
+                        <div
+                            style={{
+                                background: `url(${url}) center no-repeat`,
+                                backgroundSize: 'cover',
+                            }}
+                            className="swiperSlideDiv"></div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
             <div
                 className="shareIconDiv"
                 onClick={() => {

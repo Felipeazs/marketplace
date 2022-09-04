@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+//components
+import HomeSlider from '../components/HomeSlider'
+
+//images
 import rentCategoryImage from '../assets/jpg/rentCategoryImage.jpg'
 import sellCategoryImage from '../assets/jpg/sellCategoryImage.jpg'
 
@@ -10,6 +14,7 @@ const Explore = () => {
             <header>
                 <p className="pageHeader">Explorer</p>
             </header>
+            <HomeSlider />
 
             <main>
                 <p className="exploreCategoryHeading">Categories</p>
