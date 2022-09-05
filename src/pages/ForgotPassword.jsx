@@ -11,11 +11,11 @@ import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRig
 const ForgotPassword = () => {
     const [email, setEmail] = useState('')
 
-    const onChangeHandler = event => {
+    const onChangeHandler = (event) => {
         setEmail(event.target.value)
     }
 
-    const onSubmitHandler = async event => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault()
 
         try {
