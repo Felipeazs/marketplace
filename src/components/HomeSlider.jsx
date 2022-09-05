@@ -30,7 +30,7 @@ const HomeSlider = () => {
             const querySnap = await getDocs(q)
 
             let listings = []
-            querySnap.forEach(doc =>
+            querySnap.forEach((doc) =>
                 listings.push({
                     id: doc.id,
                     data: doc.data(),
@@ -46,6 +46,10 @@ const HomeSlider = () => {
 
     if (loading) {
         return <Spinner />
+    }
+
+    if (listings.length === 0) {
+        return <></>
     }
     return (
         <>

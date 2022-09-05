@@ -14,6 +14,7 @@ import Category from './pages/Category'
 import CreateListing from './pages/CreateListing'
 import Listings from './pages/Listings'
 import Contact from './pages/Contact'
+import EditListing from './pages/EditListing'
 
 //layout
 import Navbar from './components/Navbar'
@@ -54,6 +55,10 @@ function App() {
                     <Route
                         path="/contact/:landlordId"
                         element={<Contact />}
+                    />
+                    <Route
+                        path="/edit-listing/:listingId"
+                        element={<EditListing />}
                     />
                     <Route
                         path="/sign-in"
